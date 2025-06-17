@@ -1,0 +1,23 @@
+<div class="blank"></div>
+<div class="container">
+  
+  <app-train [ngClass]="{'active': isActive()}"></app-train>
+  <app-railway></app-railway>
+  
+  <div class="lottery">
+    @if (!isFinish()) {
+      <button mat-button (click)="start()" [disabled]="isGoing()">Start</button>
+    }
+
+    @if (isFinish()) {
+      <button mat-button (click)="reset()">Reset</button>
+    }
+    <app-lottery [lotterySubject]="lotterySubject" [resetSubject]="resetSubject" [time]="time"></app-lottery>
+  </div>
+
+  <app-railway [ngStyle]="{top: 'initial', bottom: '4rem', position: 'absolute'}"></app-railway>
+  <div class="station" [ngClass]="{'active': isActive()}"> 
+    <img src="assets/images/railway-station.png" width="150"> 
+  </div>
+</div>
+<div class="blank"></div>

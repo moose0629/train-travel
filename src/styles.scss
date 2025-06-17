@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.chimney-smoke {
+  opacity: 0;
+}
+
+app-train.active .chimney-smoke {
+  animation: chimneySmokeUp 2.5s ease-out infinite;
+}
+
+@keyframes chimneySmokeUp {
+  0% {
+    opacity: 0.7;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px) scale(2);
+  }
+}
