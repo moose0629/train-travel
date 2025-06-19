@@ -29,13 +29,13 @@
     </div>
 
     <div class="bottom">
-      @if(isFinish()) {
-        <button mat-icon-button class="reset-button" (click)="reset()">
-          <mat-icon>refresh</mat-icon>
-        </button>
-      }
       <app-railway [ngStyle]="{top: 'initial', bottom: '4rem', position: 'absolute'}"></app-railway>
       <div class="station" [ngClass]="{'active': isActive()}"> 
+        @if(isFinish()) {
+          <button mat-icon-button class="reset-button" (click)="reset()">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        }
         <img src="assets/images/jp-arrived.png" width="200"> 
       </div>
     </div>
