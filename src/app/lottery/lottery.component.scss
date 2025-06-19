@@ -1,4 +1,25 @@
 :host {
-  color: #f4e4e4;
-  font-size: 2rem;
+  flex: 1;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  position: relative;
+  width: 250px;
+  text-align: center;
+
+  .lottery-text-container {
+    min-height: 64px;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  span {
+    z-index: 2;
+  }
+
+  img {
+    position: absolute;
+    transform: translate(-50%, -10%);
+  }
 }

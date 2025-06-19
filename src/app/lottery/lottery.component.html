@@ -1,6 +1,12 @@
-@if (onLotterying()) {
-  即將前往: {{ onLotterying()?.name }}
-}
-@if (result()) {
-  最終目的地為: {{ result()?.region}} - {{ result()?.name }}
+@if (onLotterying() || result()) {
+  <img src="assets/images/jp-station.png" width="250">
+  <div class="lottery-text-container">
+    @if (onLotterying()) {
+      <span>{{ onLotterying()?.name }}</span>
+    }
+    @if (result()) {
+      <span>{{ result()?.region}}</span>
+      <span>{{ result()?.name }}</span>
+    }
+  </div>
 }

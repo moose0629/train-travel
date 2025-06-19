@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 import { fromEvent, map, startWith, Subject } from 'rxjs';
 import * as _ from 'lodash';
@@ -11,6 +12,7 @@ import { RailwayComponent } from './railway/railway.component';
 import { TrainComponent } from './train/train.component';
 import { SubStation } from './station/station.domain';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AngularDeviceInformationService } from 'angular-device-information';
 
 @Component({
   selector: 'app-root',
@@ -18,10 +20,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [
     CommonModule,
     FormsModule,
-    MatButton,
     LotteryComponent,
     RailwayComponent,
     TrainComponent,
+    MatButton,
+    MatIcon,
+    MatIconButton,
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -29,11 +33,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class AppComponent {
   
   destoryRef = inject(DestroyRef);
+  deviceInfoSrv = inject(AngularDeviceInformationService);
 
   isActive = signal(false);
   isGoing = signal(false);
   isFinish = signal(false);
   isPortrait = signal(false);
+  isMobile = signal(false);
 
   time = 10000;
 
@@ -43,7 +49,9 @@ export class AppComponent {
   lottoList: SubStation[] = [];
   private lottoQueue: SubStation | null;
 
-  constructor() {}
+  constructor() {
+    this.isMobile.set(this.deviceInfoSrv.isMobile());
+  }
 
   ngOnInit() {
     fromEvent(window, 'orientationchange').pipe(
