@@ -4,42 +4,78 @@
 
   .container {
     background: linear-gradient(#959595, #555555);
-    height: calc(100vh - 8rem);
+    height: 100vh;
     width: 100%;
+    display: flex;
+    flex-direction: column;
     position: relative;
-    padding: 4rem 0;
 
-    .lottery {
-      top: calc(50% - 4rem);
-      left: 50%;
-      transform: translate(-50%);
-      position: absolute;
+    .top {
+      flex: 3;
+      position: relative;
+    }
+    
+    .center {
+      flex: 5;
+      position: relative;
       display: flex;
+      align-items: center;
       flex-direction: column;
+      row-gap: 4px;
 
       button {
         display: block;
+        width: calc(1.125rem * 4 + 2rem);
+        color: #f4e4e4;
+        font-size: 1.125rem;
+
+        &:disabled {
+          color: rgba(0, 0, 0, .38);
+          cursor: not-allowed;
+        }
       }
     }
 
-    .station {
-      position: absolute;
-      bottom: 2.5rem;
-      right: 1rem;
-      opacity: 0;
+    .bottom {
+      flex: 2;
+      position: relative;
 
-      &.active {
-        animation: arrive 10s ease-in forwards;
-      }
-    }
-
-    @keyframes arrive {
-      90% {
+      .station {
+        position: absolute;
+        bottom: calc(20px + 1rem);
+        left: 1rem;
         opacity: 0;
+
+        &.active {
+          animation: arrive 10s ease-in forwards;
+        }
       }
 
-      100% {
-        opacity: 1;
+      @keyframes arrive {
+        90% {
+          opacity: 0;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+    }
+
+    .top, .bottom {
+      app-railway {
+        position: absolute;
+        bottom: 20px;
+      }
+    }
+
+    @media screen and (max-height: 435px) {
+      .top {
+        flex: 4;
+      }
+
+      .center {
+        flex: 4;
       }
     }
 
@@ -50,4 +86,21 @@
     }
   }
 
+
+  .orientation-warning {
+    height: calc(100vh);
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .message {
+      writing-mode: tb;
+      letter-spacing: .5rem;
+      font-size: 2rem;
+      background-color: #f4e4e4;
+    }
+  }
 }

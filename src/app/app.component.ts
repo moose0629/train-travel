@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 
-import { Subject } from 'rxjs';
+import { fromEvent, map, startWith, Subject } from 'rxjs';
 import * as _ from 'lodash';
 
 import { LotteryComponent } from './lottery/lottery.component';
 import { RailwayComponent } from './railway/railway.component';
 import { TrainComponent } from './train/train.component';
 import { SubStation } from './station/station.domain';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
@@ -26,10 +27,13 @@ import { SubStation } from './station/station.domain';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'train-travel';
+  
+  destoryRef = inject(DestroyRef);
+
   isActive = signal(false);
   isGoing = signal(false);
   isFinish = signal(false);
+  isPortrait = signal(false);
 
   time = 10000;
 
@@ -40,6 +44,20 @@ export class AppComponent {
   private lottoQueue: SubStation | null;
 
   constructor() {}
+
+  ngOnInit() {
+    fromEvent(window, 'orientationchange').pipe(
+      startWith(null), // Emit initial orientation
+      map(() => this.getOrientation()),
+      takeUntilDestroyed(this.destoryRef),
+    ).subscribe((value) => {
+      this.isPortrait.set(value);
+    })
+  }
+
+  private getOrientation(): boolean {
+    return window.screen.orientation.type.indexOf('portrait') > -1;
+  }
 
   start() {
     if (!this.isActive()) {

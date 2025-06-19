@@ -5,7 +5,7 @@
   position: absolute;
   z-index: 2;
   left: -390px;
-
+  top: calc(30vh - (15px + 5.125rem)); // top區塊高度 - (3.75(車廂) + 0.625(輪胎) + 0.75(鐵軌))
 
   &.active::ng-deep {
     animation: trainWalk 10s ease-in-out forwards;
@@ -15,27 +15,57 @@
     }
   }
 
+  @media screen and (max-height: 435px) {
+    top: calc(40vh - (15px + 5.125rem));
+
+    &.active {
+      animation: trainWalkMB 10s ease-in-out forwards;
+    }
+  }
+
   @keyframes trainWalk {
     0% {
       transform: translate(0, 0);
     }
     40% {
-      transform: translate(calc(520px + 100vw), 0); /* 第一段出畫右方 */
+      transform: translate(calc(514px + 100vw), 0); /* 第一段出畫右方 */
       opacity: 0.7;
     }
     45% {
-      transform: translate(calc(520px + 100vw), calc(100vh - 12.5rem));
+      transform: translate(calc(514px + 100vw), calc(50vh + 7rem));
       opacity: 0;
     }
-    55% {
-      transform: translate(-300px, calc(100vh - 12.5rem)); /* 左下角外進入準備 */
+    50% {
+      transform: translate(calc(514px + 100vw), calc(50vh + 7rem)) scaleX(-1);  /* 左下角外進入準備 */
       opacity: 0;
     }
-    65% {
+    60% {
+      transform: translate(calc(514px + 100vw), calc(50vh + 7rem)) scaleX(-1);
       opacity: 1;
     }
     100% {
-      transform: translate(60vw, calc(100vh - 12.5rem)); /* 右下角停住 */
+      transform: translate(550px, calc(50vh + 7rem)) scaleX(-1); /* 右下角停住 */
+    }
+  }
+
+  @keyframes trainWalkMB {
+    0% {
+      transform: translate(0, 0);
+    }
+    40% {
+      transform: translate(calc(514px + 100vw), 0); /* 第一段出畫右方 */
+      opacity: 1;
+    }
+    45% {
+      transform: translate(calc(514px + 100vw), calc(30vh + 5.5rem)) scaleX(-1);  /* 左下角外進入準備 */
+      opacity: 0;
+    }
+    50% {
+      transform: translate(calc(514px + 100vw), calc(30vh + 5.5rem)) scaleX(-1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(550px, calc(30vh + 5.5rem)) scaleX(-1); /* 右下角停住 */
     }
   }
 
