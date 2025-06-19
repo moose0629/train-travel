@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { LotteryComponent } from './lottery/lottery.component';
 import { RailwayComponent } from './railway/railway.component';
 import { TrainComponent } from './train/train.component';
+import { SubStation } from './station/station.domain';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,7 @@ import { TrainComponent } from './train/train.component';
     LotteryComponent,
     RailwayComponent,
     TrainComponent,
-  ],
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -34,6 +35,9 @@ export class AppComponent {
 
   lotterySubject = new Subject<void>();
   resetSubject = new Subject<void>();
+
+  lottoList: SubStation[] = [];
+  private lottoQueue: SubStation | null;
 
   constructor() {}
 
@@ -53,5 +57,11 @@ export class AppComponent {
     this.isActive.set(false);
     this.isFinish.set(false);
     this.resetSubject.next();
+    if (this.lottoQueue) this.lottoList.push(this.lottoQueue);
+    this.lottoQueue = null;
+  }
+
+  onLottoChange(value: SubStation) {
+    this.lottoQueue = value;
   }
 }

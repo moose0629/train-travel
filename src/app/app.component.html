@@ -1,23 +1,36 @@
-<div class="blank"></div>
-<div class="container">
-  
+<div class="container">  
   <app-train [ngClass]="{'active': isActive()}"></app-train>
   <app-railway></app-railway>
   
   <div class="lottery">
     @if (!isFinish()) {
-      <button mat-button (click)="start()" [disabled]="isGoing()">Start</button>
+      <button mat-button (click)="start()" [disabled]="isGoing()">出發</button>
     }
 
     @if (isFinish()) {
-      <button mat-button (click)="reset()">Reset</button>
+      <button mat-button (click)="reset()">重新抽選</button>
     }
-    <app-lottery [lotterySubject]="lotterySubject" [resetSubject]="resetSubject" [time]="time"></app-lottery>
+    <app-lottery 
+      [lotterySubject]="lotterySubject" 
+      [resetSubject]="resetSubject" 
+      [time]="time"
+      (lottoChange)="onLottoChange($event)"
+    ></app-lottery>
   </div>
+
+  @if (lottoList.length > 0) {
+    <div class="lotto-result">
+      <span>前次抽選結果：</span>
+      <ul>
+        @for(lotto of lottoList; track $index ) {
+          <li> {{ lotto.region }}: {{ lotto.name }}</li>
+        }
+      </ul>
+    </div>
+  }
 
   <app-railway [ngStyle]="{top: 'initial', bottom: '4rem', position: 'absolute'}"></app-railway>
   <div class="station" [ngClass]="{'active': isActive()}"> 
     <img src="assets/images/railway-station.png" width="150"> 
   </div>
 </div>
-<div class="blank"></div>

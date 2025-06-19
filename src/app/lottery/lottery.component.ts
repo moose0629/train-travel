@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, input, signal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, input, output, signal } from '@angular/core';
 import { finalize, first, interval, Subject, take, tap } from 'rxjs';
 import STATIONS from '../station/station.data';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -17,6 +17,8 @@ import * as _ from 'lodash';
 export class LotteryComponent {
   lotterySubject = input<Subject<void>>();
   resetSubject = input<Subject<void>>();
+
+  lottoChange = output<SubStation>();
   /**
    * The temporary result update time
    */
@@ -47,7 +49,11 @@ export class LotteryComponent {
       .pipe(
         take(this.time()/this.period()),
         finalize(() => {
-          this.result.set(this.utilSrv.randomMember(this.stations));
+          const randomIndex = this.utilSrv.randomInt(0, this.stations.length - 1);
+          const lotto = this.stations.splice(randomIndex, 1)[0];
+
+          this.result.set(lotto);
+          this.lottoChange.emit(lotto);
           this.onLotterying.set(null);
         })
       ).subscribe(() => {

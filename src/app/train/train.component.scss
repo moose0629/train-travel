@@ -4,11 +4,15 @@
   flex-direction: row-reverse;
   position: absolute;
   z-index: 2;
-  left: -410px;
+  left: -390px;
 
 
-  &.active {
+  &.active::ng-deep {
     animation: trainWalk 10s ease-in-out forwards;
+
+    .smoke {
+      animation: chimneySmokeUp 2.5s ease-out infinite;
+    }
   }
 
   @keyframes trainWalk {
@@ -16,11 +20,11 @@
       transform: translate(0, 0);
     }
     40% {
-      transform: translate(110vw, 0); /* 第一段出畫右方 */
+      transform: translate(calc(520px + 100vw), 0); /* 第一段出畫右方 */
       opacity: 0.7;
     }
     45% {
-      transform: translate(110vw, calc(100vh - 12.5rem));
+      transform: translate(calc(520px + 100vw), calc(100vh - 12.5rem));
       opacity: 0;
     }
     55% {
@@ -35,18 +39,80 @@
     }
   }
 
-  .base-train-carriage {
+  @keyframes chimneySmokeUp {
+    0% {
+      opacity: 0.7;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-40px) scale(2);
+    }
+  }
+
+  .base-train-carriage::ng-deep {
     display: block;
     position: relative; 
     width: 7.5rem;
     height: 3.75rem;
     background: #d22;
-    margin-left: .625rem;
+    margin-left: .25rem;
     border-radius: .25rem;
 
-    // @media screen and (min-width: 600px)  {
-    //   width: calc(7.5rem / 2);
-    //   height: calc(3.75rem / 2);
-    // }
+    &::after {
+      content: '';
+      width: 2px;
+      height: 1px;
+      background-color: #fff;
+    }
+
+    .window {
+      position: absolute;
+      top: 1rem;
+      border: .125rem solid #fff;
+      background-color: #88c;
+      border-radius: .25rem;
+    }
+
+    /* 輪胎 */
+    .wheel {
+      position: absolute;
+      width: 1.25rem;
+      height: 1.25rem;
+      bottom: -.625rem;
+      background: #333;
+      border-radius: 50%;
+
+      &.left {
+        left: .625rem;
+      }
+
+      &.right {
+        right: .625rem;
+      }
+    }
+
+    /* 煙囪 */
+    .chimney {
+      position: absolute;
+      width: 0.9375rem;
+      height: 1.5625rem;
+      top: -1.5625rem;
+      right: 1.25rem;
+      background-color: #333;
+      border-radius: 0.125rem;
+    }
+
+    /* 煙霧 */
+    .smoke {
+      position: absolute;
+      width: .625rem;
+      height: .625rem;
+      right: .9375rem;
+      top: -2.5rem;
+      background-color: #ccc;
+      border-radius: 50%;
+      opacity: 0;
+    }
   }
 }

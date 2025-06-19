@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { BaseTrainDirective } from './base/base-train.directive';
+import { BaseTrainCarriageDirective } from './base/base-train-carriage.directive';
 
 @Component({
   selector: 'app-train',
   standalone: true,
-  imports: [BaseTrainDirective],
+  imports: [BaseTrainCarriageDirective],
   templateUrl: './train.component.html',
   styleUrl: './train.component.scss'
 })
